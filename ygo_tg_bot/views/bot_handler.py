@@ -8,7 +8,7 @@ from ygo_tg_bot.constants import TG_URL
 
 @csrf_exempt
 def bot_handler(request):
-    message = str(dict(QueryDict(request.body))['update_id'])
+    message = json.dumps(json.loads(request.body))
 
     requests.post(
         '{}sendMessage'.format(TG_URL),

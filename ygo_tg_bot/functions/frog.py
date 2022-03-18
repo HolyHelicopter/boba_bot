@@ -43,7 +43,7 @@ def frog(update_data):
                 words = words_temp
 
                 if kvak_found:
-                    if find_ru_letters_in_string(message_text):
+                    if find_ru_letters_in_string(lowercase_text.replace('квак', '')):
                         query = 'лягушка'
                     else:
                         query = 'frog'

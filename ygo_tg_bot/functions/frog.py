@@ -60,6 +60,8 @@ def frog(update_data):
                         ).json()['value']
 
                     if len(found_images):
+                        found_images = found_images[:20]
+
                         image_index = random.randint(0, len(found_images) - 1)
                         image_url = found_images[image_index]['contentUrl']
 

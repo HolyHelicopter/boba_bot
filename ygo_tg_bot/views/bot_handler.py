@@ -1,21 +1,14 @@
-from django.http import HttpResponse, QueryDict
-import requests
+from django.http import HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 
-from ygo_tg_bot.constants import TG_URL
+from ygo_tg_bot.functions.get_card import get_card
 
 
 @csrf_exempt
 def bot_handler(request):
-    message = json.dumps(json.loads(request.body))
+    update_data = json.loads(request.body)
 
-    requests.post(
-        '{}sendMessage'.format(TG_URL),
-        {
-            'chat_id': '-601053432',
-            'text': message
-        }
-    )
+    get_card(update_data)
 
     return HttpResponse(200)

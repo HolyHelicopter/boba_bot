@@ -2,6 +2,7 @@ import requests
 import random
 
 from ygo_tg_bot.constants import TG_URL
+from ygo_tg_bot.functions.find_ru_letters_in_string import find_ru_letters_in_string
 
 BING_URL = "https://bing-image-search1.p.rapidapi.com/images/search?q="
 BING_HEADERS = {
@@ -42,7 +43,10 @@ def frog(update_data):
                 words = words_temp
 
                 if kvak_found:
-                    query = 'лягушка'
+                    if find_ru_letters_in_string(message_text):
+                        query = 'лягушка'
+                    else:
+                        query = 'frog'
                     for word in words:
                         query += ' ' + word
 

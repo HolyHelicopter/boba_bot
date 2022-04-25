@@ -61,13 +61,17 @@ def get_card(update_data):
                 price_message += 'tcgplayer: {}$ ({} руб.)'.format(tcgplayer_price_usd, tcgplayer_price_rub)
                 price_message += '\ncardmarket: {}$ ({} руб.)'.format(cardmarket_price_usd, cardmarket_price_rub)
                 price_message += '\nebay: {}$ ({} руб.)'.format(ebay_price_usd, ebay_price_rub)
+                
+                effect_message = ''
+                effect_message += card_data['desc']
 
                 requests.post(
                     '{}sendPhoto'.format(TG_URL),
                     {
                         'chat_id': chat_id,
                         'photo': card_image,
-                        'caption': price_message,
+                        #'caption': price_message,
+                        'caption': effect_message,
                         'reply_to_message_id': message_id
                     }
                 )

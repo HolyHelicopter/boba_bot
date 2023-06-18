@@ -10,8 +10,6 @@ from ygo_tg_bot.functions.frog import frog
 def bot_handler(request):
     update_data = json.loads(request.body)
 
-    get_card(update_data)
-
     frog(update_data)
 
     return HttpResponse(200)

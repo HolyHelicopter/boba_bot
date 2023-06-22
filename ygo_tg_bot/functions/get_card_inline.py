@@ -1,6 +1,6 @@
 import requests
 from ygo_tg_bot.constants import TG_URL
-from ygo_tg_bot.constants import GET_CARDS_URL
+from ygo_tg_bot.functions.get_cards_from_g_table import get_cards_from_g_table
 
 
 def get_card_inline(update_data):
@@ -9,22 +9,28 @@ def get_card_inline(update_data):
 
         inline_query = update_data['inline_query']['query'].lower()
 
-        resp = requests.get(GET_CARDS_URL)
-        cards = resp.json()['values']
+        if len(inline_query) < 3:
+            return
 
-        fitting_cards_images = []
+        cards = get_cards_from_g_table()
+
+        fitting_cards = []
         for card in cards:
             if inline_query in card[0].lower():
-                fitting_cards_images.append(card[1])
+                fitting_cards.append(card)
 
         results = '['
         i = 1
-        for fitting_card_image in fitting_cards_images:
-            results += '{"id": "' + str(i) + '", "type": "photo",'
-            results += '"photo_url": "' + fitting_card_image + '", "thumbnail_url": "' + fitting_card_image + '"}'
-            if i != len(fitting_cards_images):
+        for fitting_card in fitting_cards:
+            results += '{"id": "' + str(i) + '", "type": "article",'
+            results += '"title": "' + fitting_card[0] + '", "input_message_content": {"message_text": "<|'
+            results += fitting_card[0] + '|>"}}'
+
+            if i != len(fitting_cards):
                 results += ','
+
             i += 1
+
         results += ']'
 
         requests.post(

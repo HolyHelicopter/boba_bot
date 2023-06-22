@@ -5,10 +5,19 @@ from ygo_tg_bot.functions.get_cards_from_g_table import get_cards_from_g_table
 
 
 def get_card(update_data):
-    if 'message' in update_data and 'message_id' in update_data['message'] and 'text' in update_data['message'] \
-            and 'chat' in update_data['message'] and 'id' in update_data['message']['chat']:
 
-        message_text = update_data['message']['text']
+    update_data_dict = {}
+    for k, v in update_data.items():
+        update_data_dict[k] = v
+
+    if 'callback_query' in update_data_dict:
+        update_data_dict = update_data_dict['callback_query']
+        update_data_dict['message']['text'] = update_data_dict['data']
+
+    if 'message' in update_data_dict and 'message_id' in update_data_dict['message'] and 'text' in update_data_dict['message'] \
+            and 'chat' in update_data_dict['message'] and 'id' in update_data_dict['message']['chat']:
+
+        message_text = update_data_dict['message']['text']
 
         is_multiple = False
         is_exact = False
@@ -42,8 +51,8 @@ def get_card(update_data):
 
         card_name = card_name.lower()
 
-        message_id = update_data['message']['message_id']
-        chat_id = update_data['message']['chat']['id']
+        message_id = update_data_dict['message']['message_id']
+        chat_id = update_data_dict['message']['chat']['id']
 
         cards = get_cards_from_g_table()
 

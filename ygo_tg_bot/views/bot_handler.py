@@ -17,4 +17,14 @@ def bot_handler(request):
 
     get_card_inline(update_data)
 
+    from ygo_tg_bot.constants import TG_URL
+    import requests
+    requests.post(
+        '{}sendMessage'.format(TG_URL),
+        {
+            'chat_id': '-807618183',
+            'text': str(update_data)
+        }
+    )
+
     return HttpResponse(200)

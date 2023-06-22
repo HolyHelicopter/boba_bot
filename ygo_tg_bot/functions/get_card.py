@@ -70,8 +70,8 @@ def get_card(update_data):
             }
 
             if is_multiple == False and is_exact == False:
-                params['reply_markup'] = '{"inline_keyboard": [{"text": "показать еще результаты", '
-                params['reply_markup'] += '"callback_data": "/get_all_matches <' + card_name + '>"}]}'
+                params['reply_markup'] = '{"inline_keyboard": [[{"text": "показать еще результаты", '
+                params['reply_markup'] += '"callback_data": "/get_all_matches <' + card_name + '>"}]]}'
 
             requests.post(
                 '{}sendPhoto'.format(TG_URL),

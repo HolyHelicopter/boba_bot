@@ -6,6 +6,8 @@ from ygo_tg_bot.functions.get_cards_from_g_table import get_cards_from_g_table
 
 def get_card(update_data):
 
+    current_time_stamp = int(time.time())
+
     update_data_dict = {}
     for k, v in update_data.items():
         update_data_dict[k] = v
@@ -74,7 +76,7 @@ def get_card(update_data):
 
             params = {
                 'chat_id': chat_id,
-                'photo': card[1],
+                'photo': '{}&v={}'.format(card[1], current_time_stamp),
                 'reply_to_message_id': message_id
             }
 
